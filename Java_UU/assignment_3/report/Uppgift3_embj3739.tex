@@ -1,0 +1,110 @@
+\documentclass[hidelinks]{article}
+\usepackage{fullpage} % Package to use full page
+\usepackage{parskip} % Package to tweak paragraph skipping
+\usepackage{tikz} % Package for drawing
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{ upgreek }
+\usepackage[explicit]{titlesec}
+\usepackage{graphicx}
+\usepackage {verbatim}
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+%\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{#1\ \thesection}
+
+\title{Inlämning 3 \\ Objektorienterad programmering med Java}
+\author{Emil Björklund - embj3739 \\ emilbjorklund@live.com}
+
+
+\begin{document}
+
+\maketitle 
+\newpage
+
+\section*{Inledning}
+\begin {itemize}
+\item IDE: Visual Studio Code
+\item Java verision: JDK 8 update 191
+\item OS: MacOS Mojave
+\end{itemize}
+
+\textbf{Note.} Källkoden bifogas i separat .zip som finns i inlämningen.
+
+\section*{Struktur}
+\subsection*{Class Window}
+Denna klass innehåller main konstruktor och anropas därmed av användaren vid start.
+Klassen öppnar en "JFileChooser" för att användaren enkelt skall kunna importera önskade bilder.
+Om användaren inte importerar ett jämnt antal bilder får användaren på nytt importera korrekt antal. Ett jämnt antal bilder
+krävas för att programmet skall kunna applicera en framsida samt baksida av varje kort. 
+När användaren har lyckats med sin importering av bilder sparas alla i en array av "Files". Denna array skickas dean vidare när main
+deklarerar ett nytt "Window" objekt. \\
+I objektet "Window" skapas en "Jframe" samt ett objekt kallat Panel där all hantering av bilder och position sker.
+Objektet panel läggs sedan till i "Jframe".
+
+\subsection*{Class Panel}
+I klassen Panel deklareras det två arrayer. Den första arrayen är en tom "Image" array med lika många platser som "Files" arrayen från main är.
+Den andra arrayen är av typen boolean som innehåller information om respektive bild visar baksida eller ej.
+När arrayerna är deklarerade anropas metoden "initLayers" som ser ut som följande:
+\begin{verbatim}
+private  void initLayers(File files[]) {
+    for (int i = 0; i <= (files.length - 1)/2; i++) {
+        layers[i] = new Image(i*10,i*20,files[i],files[i+(files.length)/2]);
+    }
+}    
+\end{verbatim}
+Denna loop itererar längden av "Files" arrayen. Varje possition i arrayen fylls med ett Objekt av klassen Image. 
+Denna klass tar även hand om events som "MouseClicked", "MouseDraged", "MousePressed" för att kunna interagera med bilderna i programmet.
+Logiken bakom "MouseClicked" och "MouseDraged" är nästan lika och ser ut som följande:
+\begin{verbatim}
+public void mousePressed(MouseEvent e) {
+    for (int i = 0; i <= layers.length - 1; i++) {
+        if (layers[i].constraint(e.getX(), e.getY())){
+            Image temp = layers[i];
+            
+            for (int j = i; j > 0; j--){
+                layers[j] = layers[j-1];
+                isBackside[j] = isBackside[j-1];
+            }
+            
+            layers[0] = temp;
+            isActive = true;
+            break;
+        } 
+    }
+}
+\end{verbatim}
+När musen trycks ner eller klickas loopar en for-loop från noll till längden av bild arrayen.
+Om något lagers bild omsluter kordinaterna för musen flyttas indexeringen om i arrayen så denna bild hamnar längst fram.
+För att kolla om musen är över en bild anropas metoden "constraint" i klassen "Image"
+När lagerna har bytt plats så att den aktiva bilden är längst fram i arrayen blir variablen "isActive" sann och 
+möjliggör för eventet "MouseDraged" att anropa klassen "Images" metod action. Efter anropet kallas funktionen "repaint".
+I klassen "Panel" finns metoden "paintCompoent" denna metod itererar arrayen för bilder baklänges så att den aktiva bilden målas upp sist.
+
+\subsection*{Class Image}
+Klassen Image har all information om bilden och dess possition. När klassen deklareras som ett objekt från klassen Panel anropar konstrukorn metoden
+"readImage" denna metod läser in två bilder från sökvägen som ges som array i metod-huvudet. Koden kan ses nedan.
+\begin{verbatim}
+public  void readImage(File file1,File file2) {
+    try
+    { 
+        image = new BufferedImage(100, 100,BufferedImage.TYPE_INT_ARGB);
+        image_backside = new BufferedImage(100, 100,BufferedImage.TYPE_INT_ARGB);
+        image = ImageIO.read(file1); 
+        image_backside = ImageIO.read(file2); 
+
+        System.out.println("Reading complete."); 
+    } 
+    catch(IOException e) 
+    { 
+        System.out.println("Error: "+e); 
+    } 
+}
+\end{verbatim}
+Klassen har även variabler som har information om bildens possition uttryckt i x och y kordinater.
+Om ett mus event händer i klassen Panel anropas klassen Images metod constraint för att verifiera om musens kordinater är inom bildens. Vidare har klassen även
+en metod där bildens kordinater uppdateras beroende på musens kordinater för att sedan kunna ritas om.
+
+
+
+\end{document}

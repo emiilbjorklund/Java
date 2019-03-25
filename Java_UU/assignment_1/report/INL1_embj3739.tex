@@ -1,0 +1,121 @@
+\documentclass[hidelinks]{article}
+
+\usepackage{fullpage} % Package to use full page
+\usepackage{parskip} % Package to tweak paragraph skipping
+\usepackage{tikz} % Package for drawing
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{ upgreek }
+\usepackage[explicit]{titlesec}
+\usepackage{graphicx}
+\usepackage {verbatim}
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+%\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{#1\ \thesection}
+
+\title{Inlämning 1 \\ Objektorienterad programmering med Java}
+\author{Emil Björklund - embj3739 \\ emilbjorklund@live.com}
+
+
+\begin{document}
+
+\maketitle 
+\newpage
+
+\section*{Inledning}
+\begin {itemize}
+\item IDE: Eclipse IDE v4.5.0
+\item Java verision: JDK 8 update 191
+\item OS: MacOS Mojave
+\end{itemize}
+
+\textbf{Note.} Källkoden bifogas i separat fil som ligger i samma .zip som detta dokument. All kod befinner sig i samma fil, dvs. alla classer i samma dokument.
+
+\section*{Deluppgift}
+\subsection*{1}
+Programmet kompilerades genom Eclipse, ett litet fönster öppnades och en gul boll "studsade" mot väggarna. När fönstret expanderades fortsatte bollen att studsa inom den föregående begränsingen.
+
+\subsection*{2}
+För att ändra färg anropas funktionen "setColor" efter att ett objekt av klassen Ball har skapats. Om objektet heter "ball1" kan en färgändring göras genom att anropa "ball1.setColor(Color.blue)" där objektet skapas i klassen BallPanel. Nu är färgen blå.
+\\Här är funtionen som ändrar färg:
+\begin{verbatim}
+ public void setColor( Color c ) {
+     color = c;
+ }
+ \end{verbatim}
+
+\subsection*{3}
+Funtionen "wasResized" anropas om "getWith()" och "getHeight" inte stämmer överens med den givna storleken. Funktionen som anropar "wasResized" triggars av klockan. I funktionen "wasResized" anropas objektet balls funtion "setBoundingBox" för att uppdatera boxen som bollarna studsar i.
+\\Här är den nya implementationen:
+\begin{verbatim}
+public void wasResized( int newWidth, int newHeight ) {
+     width = newWidth;
+     height = newHeight;
+     // Uppdaterar boxen om wasResized körs, det vill säga if statsen i actionPerformed är uppfyld.
+     // Anropar funktionen för att ändra boxen som bollsen stutsar i.
+     ball1.setBoundingBox( new Rectangle( 0, 0, width, height ) );
+     ball2.setBoundingBox( new Rectangle( 0, 0, width, height ) );
+     
+ }
+ \end{verbatim}
+
+\newpage
+\subsection*{4}
+För att ändra storlek på bollen finns det en variabel för diameter i klassen ball. Sedan skapades det en funtion i klassen ball likt funktionen för färgsättning. Den nya funktionen tar en integer som argument för att sedan tilldela variablen för diameter värdet på argumentet.
+\begin{verbatim}
+public void setDiamter( int d ) {
+     diameter = d;
+ }
+...
+ball1.setDiamter(5);
+ \end{verbatim}
+
+\subsection*{5}
+För att lägga till en boll skapades det ett till objekt av klassen ball. Sedan gjordes det induvuduella anrop för färgsättning, storlek och hastighet. 
+\\Ändringar:
+\begin{verbatim}
+//Skapar två objekt av klassen Ball
+ball1 = new Ball( width / 10, height / 5, 10, 10 );
+ball2 = new Ball( width / 10, height / 5, 5, 5 );
+ball1.setBoundingBox( new Rectangle( 0, 0, width, height ) );
+ball2.setBoundingBox( new Rectangle( 0, 0, width, height ) );
+ball1.setColor(Color.blue);
+ball1.setDiamter(5);
+ball2.setColor(Color.red);
+ball2.setDiamter(30);
+
+...
+
+ball1.paint( g );
+ball2.paint( g );
+...
+
+ball1.action();
+ball2.action();
+\end{verbatim}
+
+\newpage
+\subsection*{6}
+I kalssen ball skapades det en boolean med namnet "size" som default är false. Denna variabel används för att bestämma om bollen skall krympa eller växa i funtionen "constrain". Om diameter är mindre eller lika med 5 sätts "size" till true och om diameter är större eller lika med 40 sätts "size" till false. Beroende på om "size" är true eller false kommer diametern att öka med 1 respektive minska med 1 i funtionen "action"
+Ändringar:
+\begin{verbatim}
+private boolean   size = false;
+
+...
+
+//Ändringar i constrain
+//Beroende på nuvarade diametern skall bollen öka eller minska i storlek.
+if (diameter <= 5) size = true;
+if (diameter >=40) size = false;
+
+...
+
+//Ändringar i action
+// Ökar eller minskar diameter på bollen
+if (size == false) diameter--;
+if (size == true) diameter++;
+\end{verbatim}
+
+
+\end{document}
