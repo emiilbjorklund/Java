@@ -111,13 +111,11 @@ abstract class Animal extends Entity{
                         else if (isFriend(entity)){
                             hasFriend = true;
                             friend = entity;
-                            
                         }
                         else if(compatible.check(entity)){
                             if (isFood(entity) && food == null){
                                 hasFood = true;
-                                food = entity;
-                                
+                                food = entity; 
                             }
                             else if((Math.abs(possition.x-p.x) <= 1) && (Math.abs(possition.y-p.y)) <= 1 ){
                                 valSetOne.add(p);
@@ -157,14 +155,12 @@ abstract class Animal extends Entity{
                 if (compatible.check(entity)){
                     pasture.moveEntity(this, goTo,possition);
                     possition = pasture.getEntityPosition(this);
-                    System.out.println("Update Pos:" + possition);
                 }
             }
         }
         else if (collection.isEmpty()){
             pasture.moveEntity(this, goTo,possition);
             possition = pasture.getEntityPosition(this);
-            //System.out.println(possition + "empty");
         }
     }
 

@@ -1,5 +1,5 @@
 import java.awt.Point;
-import java.util.List;
+
 public class Plant extends Entity {
     private int reproduceTimer = 0;
 
@@ -9,7 +9,6 @@ public class Plant extends Entity {
         }
         else 
             return true;
-        
     }
     public void giveBirth(){
         Plant plant = new Plant(pasture);

@@ -1,7 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
-import java.util.*;
-
 
 abstract class Entity {
     private ImageIcon image = null;
@@ -15,8 +12,7 @@ abstract class Entity {
     public ImageIcon getImage() {
         return image;
     }
-
-    //public abstract boolean isCompatible(Entity entity);
+    
     public abstract void tick();
 
     public Entity(Pasture pasture, String path,IsCompatible entity) {
@@ -24,6 +20,4 @@ abstract class Entity {
         selectImage(path);
         compatible = entity;
     }
-    
-
 }

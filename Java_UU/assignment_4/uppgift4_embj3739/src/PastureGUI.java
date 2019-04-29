@@ -278,8 +278,6 @@ public class PastureGUI extends JFrame implements ActionListener, FocusListener 
     }
     private boolean isChar(String input){
     for (int i = 0; i < input.length();i++) {
-        // checks whether the character is not a letter
-        // if it is not a letter ,it will return false
         if ((Character.isLetter(input.charAt(i)) == true)) {
            return true;
         }
