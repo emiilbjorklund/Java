@@ -1,7 +1,12 @@
+/**
+* <h1>Pasture Simulation</h1>
+*
+* @author  Emil Björklund -embj3739
+* @version 1.0
+* @since   2019-04-29
+*/
 import java.util.*;
-import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Toolkit;
 
 
 public class Pasture {
@@ -11,9 +16,7 @@ public class Pasture {
     private int plantCounter;
     private int sheepCounter;
     private int wolfCounter;
-    
-    Toolkit toolkit = Toolkit.getDefaultToolkit();
-    Dimension screenSize = toolkit.getScreenSize();
+
     public final Set<Entity> cleanUp = new HashSet<Entity>();
     private final Set<Entity> world = 
         new HashSet<Entity>();
@@ -24,6 +27,9 @@ public class Pasture {
 
     private final PastureGUI gui;
 
+    /**
+     * Creates a pasture.
+    */
     public Pasture() {
         Engine engine = new Engine(this);
         gui = new PastureGUI(MAX_WIDTH, MAX_HEIGHT, engine);
@@ -74,7 +80,8 @@ public class Pasture {
         
         gui.update(plantCounter,sheepCounter,wolfCounter);
     }
-
+    /** Updates the GUI.
+    */
     public void refresh() {
         for (Entity delete : cleanUp){
                 deleteEntity(delete);
@@ -84,6 +91,10 @@ public class Pasture {
         gui.update(plantCounter,sheepCounter,wolfCounter);
     }
 
+    /** Adds entity to pasture.
+    * @param entity A Entity that will be added to pasture.
+    * @param pos A point of the desired position of the entity.
+    */
     public void addEntity(Entity entity, Point pos) {
         if (entity.getClass().equals(Plant.class)) plantCounter++;
         else if (entity.getClass().equals(Herbivore.class)) sheepCounter++;
@@ -102,21 +113,26 @@ public class Pasture {
 
         gui.addEntity(entity, pos);
     }
-    
-    public void moveEntity(Entity e, Point newPos, Point oldPos) {
+
+    /** Moves entity in pasture.
+    * @param entity A Entity that will be moved in pasture.
+    * @param newPos The new position (Point) of the entity.
+    * @param oldPos The old position (Point) of the entity.
+    */
+    public void moveEntity(Entity entity, Point newPos, Point oldPos) {
         List<Entity> l = grid.get(oldPos);
-        if (!l.remove(e)) 
+        if (!l.remove(entity)) 
             throw new IllegalStateException("Inconsistent stat in Pasture");  
         l = grid.get(newPos);
         if (l == null) {
             l = new ArrayList<Entity>();
             grid.put(newPos, l);
         }
-        l.add(e);
+        l.add(entity);
 
-        point.put(e, newPos);
+        point.put(entity, newPos);
 
-        gui.moveEntity(e, oldPos, newPos);
+        gui.moveEntity(entity, oldPos, newPos);
     }
     public void removeEntity(Entity entity){
         cleanUp.add(entity);
@@ -136,6 +152,11 @@ public class Pasture {
 
     }
 
+    /** 
+    * Checks for free space.
+    * @param entity A Entity that will be checked for free space.
+    * @return A free Point in pasture.
+    */
     public Point getFreePosition(Entity entity)  
         throws MissingResourceException {
         Point position = new Point((int)(Math.random() * constants.WIDTH.get()),
@@ -169,11 +190,20 @@ public class Pasture {
                   "There is no free space"+" left in the pasture",
                   "Pasture", "");
     }
-
+    
+    /**
+     * Get entities in pasture.
+     * @return A List of all elements in the pasture.
+    */
     public List<Entity> getEntities() {
         return new ArrayList<Entity>(world);
     }
-        
+    
+    /**
+     * Get entities at a position in pasture.
+     * @param lookAt A Point where to check for entities.
+     * @return A Collection of all elements in a point.
+    */
     public Collection<Entity> getEntitiesAt(Point lookAt) {
         Collection<Entity> l = grid.get(lookAt);
         
@@ -185,11 +215,17 @@ public class Pasture {
             return new ArrayList<Entity>(l);
         }
     }
-
+    /**
+     * Get an entitys position.
+     * @param entity A entity in the pasture.
+     * @return A Point for the entity.
+    */
     public Point getEntityPosition(Entity entity) {
         return point.get(entity);
     }
-
+    /**
+     * Updates user inputs.
+    */
     private void updateConfig(){
         if (gui.inputCustom.get(0) != -1) constants.WIDTH.set(gui.inputCustom.get(0));
         if (gui.inputCustom.get(1) != -1) constants.HEIGHT.set(gui.inputCustom.get(1));

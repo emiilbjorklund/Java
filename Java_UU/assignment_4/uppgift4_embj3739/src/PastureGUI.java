@@ -1,3 +1,8 @@
+/**
+* @author  Emil Björklund -embj3739
+* @version 1.0
+* @since   2019-04-29
+*/
 import java.awt.*;
 import java.awt.List;
 import java.awt.event.*;
@@ -56,8 +61,10 @@ public class PastureGUI extends JFrame implements ActionListener, FocusListener 
     /**
      * Creates a new instance of this class with the specified settings for the
      * pasture to display.
+     * @param width Max width of pasture
+     * @param height Max height of pasture
+     * @param engine The engine declared in Pasture.
      */
-
     public PastureGUI(int width, int height, Engine engine) {
     
         placeholder.add("Width");
@@ -154,6 +161,9 @@ public class PastureGUI extends JFrame implements ActionListener, FocusListener 
         setVisible(true);
     }
 
+    /**
+     * Action tridded when user press buttons
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
                 startButton.setEnabled(false);
@@ -232,8 +242,9 @@ public class PastureGUI extends JFrame implements ActionListener, FocusListener 
      * The method addEntity is called to notify the GUI that an entity
      * has been added to a position. The icon of the added entity is
      * displayed at the position.
+     * @param e An entity that is added.
+     * @param p Position of that entity.
      */
-
     public void addEntity(Entity e, Point p) {
         ImageIcon icon = e.getImage();
 
@@ -249,6 +260,12 @@ public class PastureGUI extends JFrame implements ActionListener, FocusListener 
         size++;
     }
 
+    /**
+     * This method moves an existing entity.
+     * @param e An entity in the pasture.
+     * @param old Position of that entity.
+     * @param ny A new position of that entity.
+     */
     public void moveEntity(Entity e, Point old, Point ny) {
         removeEntity(e, old);
         addEntity(e, ny);
@@ -258,9 +275,9 @@ public class PastureGUI extends JFrame implements ActionListener, FocusListener 
      * The method removeEntity is called to notify the GUI that an
      * entity has been removed from a position. One icon among the
      * icons of the remaining entities is displayed at the position.
+     * @param e An entity that is added.
+     * @param p Position of that entity.
      */
-
-
     public void removeEntity(Entity e, Point p) {
         
         ImageIcon icon0 = e.getImage();
@@ -276,6 +293,11 @@ public class PastureGUI extends JFrame implements ActionListener, FocusListener 
         
         size--;
     }
+    /**
+     * Checks if the user inputs contains characters.
+     * @param input
+     * @return A boolean, true if the input has a char.
+     */
     private boolean isChar(String input){
     for (int i = 0; i < input.length();i++) {
         if ((Character.isLetter(input.charAt(i)) == true)) {
@@ -286,6 +308,12 @@ public class PastureGUI extends JFrame implements ActionListener, FocusListener 
      return false;
     }
 
+    /**
+     * Updates the GUI, called by Pasture.
+     * @param plants Number of plants in the pasture.
+     * @param sheeps Number of sheeps in the pasture.
+     * @param wolves Number of wolves in the pasture.
+     */
     public void update(int plants, int sheeps, int wolves) {
         this.plants = plants;
         this.sheeps = sheeps;
@@ -297,7 +325,9 @@ public class PastureGUI extends JFrame implements ActionListener, FocusListener 
         monitorSheep.setText("Sheeps: " + this.sheeps);
         monitorWolf.setText("Wolves: " + this.wolves);
     }
-
+    /**
+     * Listner trigegd by focus event.
+     */
     @Override
     public void focusGained(FocusEvent e) {
 
@@ -309,7 +339,10 @@ public class PastureGUI extends JFrame implements ActionListener, FocusListener 
         }
 
     }
-
+    
+    /**
+     * Listner trigegd by focus event.
+     */
     @Override
     public void focusLost(FocusEvent e) {
 

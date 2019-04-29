@@ -1,3 +1,8 @@
+/**
+* @author  Emil Björklund -embj3739
+* @version 1.0
+* @since   2019-04-29
+*/
 import java.util.*;
 import javax.swing.Timer;
 import java.awt.event.*;
@@ -10,7 +15,6 @@ import java.awt.event.*;
  * to what kind they are. This could mean moving the entity, making
  * the entity starve from hunger, or producing a new offspring.
  */
-
 public class Engine implements ActionListener {
     
     private final int SPEED_REFERENCE = 1000;
@@ -20,11 +24,17 @@ public class Engine implements ActionListener {
 
     private Pasture pasture;
 
-
+    /**
+     * Creates a new engine.
+     * @param pasture The pasture that invokes the engine.
+     */
     public Engine (Pasture pasture) {
         this.pasture = pasture;
     }
 
+    /**
+     * Trigged by timer and invokes the entities in the pasture.
+     */
     public void actionPerformed(ActionEvent event) {
      
         List<Entity> queue = pasture.getEntities();
@@ -35,19 +45,32 @@ public class Engine implements ActionListener {
         time++;
     }
 
+    /**
+     * Sets the speed.
+     * @param speed Speed of simulation.
+     */
     public void setSpeed(int speed) {
         timer.setDelay(speed);
     }
 
+    /**
+     * Starts the simulation.
+     */
     public void start() {
         setSpeed(speed);
         timer.start();
     }
 
+    /**
+     * Stops the simulation.
+     */
     public void stop() {
         timer.stop();
     }
 
+    /**
+     * @return The time of the simulation.
+     */
     public int getTime () {
         return time;
     }
