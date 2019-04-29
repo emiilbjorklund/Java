@@ -3,7 +3,7 @@ import java.awt.Point;
 
 public class Herbivore extends Animal {
 
-    public void giveBirth(List<Point> neighbours){
+    private void giveBirth(List<Point> neighbours){
         Herbivore herbivore = new Herbivore(pasture);
         herbivore.setPossition(neighbours.get(0));
         pasture.addEntity(herbivore,neighbours.get(0));
@@ -60,7 +60,7 @@ public class Herbivore extends Animal {
         alive++;
     }  
     public Herbivore(Pasture pasture){
-        super(pasture,"/Developer/devjava/java_uu/assignment_4/uppgift4_embj3739/img/sheep.gif",IsCompatible.HERBIVORE);
+        super(pasture,"img/sheep.gif",IsCompatible.HERBIVORE);
 
     }
 }

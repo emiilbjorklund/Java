@@ -54,7 +54,7 @@ public class Carnivore extends Animal {
     }
     
     public Carnivore(Pasture pasture){
-        super(pasture,"/Developer/devjava/java_uu/assignment_4/uppgift4_embj3739/img/wolf.gif",IsCompatible.CARNIVORE);
+        super(pasture,"img/wolf.gif",IsCompatible.CARNIVORE);
 
     }
 }

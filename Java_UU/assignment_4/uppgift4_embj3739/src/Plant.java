@@ -25,7 +25,7 @@ public class Plant extends Entity {
     }
         
     public Plant(Pasture pasture) {
-        super(pasture,"/Developer/devjava/java_uu/assignment_4/uppgift4_embj3739/img/plant.gif",IsCompatible.PLANT);
+        super(pasture,"img/plant.gif",IsCompatible.PLANT);
 
     }
 

@@ -13,9 +13,9 @@ import java.awt.event.*;
 
 public class Engine implements ActionListener {
     
-    private final int SPEED_RECERENCE = 1000;
+    private final int SPEED_REFERENCE = 1000;
     private final int speed           = 100;
-    private final Timer timer         = new Timer(SPEED_RECERENCE/speed,this);
+    private final Timer timer         = new Timer(SPEED_REFERENCE/speed,this);
     private int time                  = 0;
 
     private Pasture pasture;

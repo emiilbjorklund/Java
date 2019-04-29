@@ -9,8 +9,7 @@ import javax.swing.*;
 public class PastureGUI extends JFrame implements ActionListener, FocusListener {
     public Object syncObject = new Object();
 
-    private final ImageIcon II_EMPTY = new ImageIcon("empty.gif");
-    private final int SCALE = 30;
+    private final ImageIcon II_EMPTY = new ImageIcon("img/empty.gif");
     private final Engine engine;
 
     private final JLabel[][] grid;
@@ -46,6 +45,7 @@ public class PastureGUI extends JFrame implements ActionListener, FocusListener 
     private final JButton defaultButton = new JButton("Default");
     private final JButton customButton = new JButton("Custom");
 
+    private final int SCALE = 30;
     private final int height;
     private final int width;
     private int size = 0;

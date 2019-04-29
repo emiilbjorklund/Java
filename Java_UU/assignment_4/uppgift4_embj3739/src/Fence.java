@@ -5,7 +5,7 @@ public class Fence extends Entity {
     }
         
     public Fence(Pasture pasture) {
-        super(pasture,"/Developer/devjava/java_uu/assignment_4/uppgift4_embj3739/img/fence.gif",IsCompatible.FENCE);
+        super(pasture,"img/fence.gif",IsCompatible.FENCE);
     }
 
     @Override
