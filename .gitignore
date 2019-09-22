@@ -1,13 +1,7 @@
 *
 !*/
 !.gitignore
-!*.tex
 !*.java
 !*.class
-!*.png
-!*.jpg
-!*.jpeg
-!*.gif
 !*.classpath
 !*.project
-!*.pdf
