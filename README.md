@@ -1,3 +1,3 @@
-# DevJava
+# Java Development
 
-Java Development
+Java Development for school assignments.
